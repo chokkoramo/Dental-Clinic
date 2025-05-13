@@ -36,3 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/out/
+/.idea/artifacts/DentalClinic_war_exploded.xml

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Dentist extends Person {
 
-    private int dentistId;
+//    private int dentistId;
     private String specialty;
     private List<Shift> shiftList;
     private User user;
@@ -14,22 +14,21 @@ public class Dentist extends Person {
     public Dentist() {
     }
 
-    public Dentist(int personId, String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth, int dentistId, String specialty, List<Shift> shiftList, User user, Schedule schedule) {
-        super(personId, dni, firstName, lastName, phone, address, dateOfBirth);
-        this.dentistId = dentistId;
+    public Dentist(String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth, String specialty, List<Shift> shiftList, User user, Schedule schedule) {
+        super(dni, firstName, lastName, phone, address, dateOfBirth);
         this.specialty = specialty;
         this.shiftList = shiftList;
         this.user = user;
         this.schedule = schedule;
     }
 
-    public int getdentistId() {
-        return dentistId;
-    }
-
-    public void setdentistId(int dentistId) {
-        this.dentistId = dentistId;
-    }
+//    public int getdentistId() {
+//        return dentistId;
+//    }
+//
+//    public void setdentistId(int dentistId) {
+//        this.dentistId = dentistId;
+//    }
 
     public String getSpecialty() {
         return specialty;

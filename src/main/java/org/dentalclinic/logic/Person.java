@@ -1,19 +1,31 @@
 package org.dentalclinic.logic;
 
+import jakarta.persistence.*;
+import jdk.jfr.Timestamp;
+
+import java.time.LocalDate;
 import java.util.Date;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int Id;
     private String dni;
     private String firstName;
     private String lastName;
     private String phone;
     private String address;
+
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     public Person() {
     }
 
-    public Person(int personId, String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth) {
+    public Person(String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth) {
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
