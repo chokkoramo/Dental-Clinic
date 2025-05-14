@@ -1,21 +1,38 @@
 package org.dentalclinic.logic;
 
+import jakarta.persistence.*;
+import java.io.Serializable;
+
+import java.time.LocalDate;
 import java.util.Date;
 
-public class Shift {
+@Entity
+public class Shift implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shiftId;
-    private Date date;
+    private LocalDate date;
     private String time;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "shiftId")
+    private Dentist dentistMap;
+
+    @ManyToOne
+    @JoinColumn(name = "shiftId")
+    private Patient patientMap;
 
     public Shift() {
     }
 
-    public Shift(int shiftId, Date date, String time, String description) {
+    public Shift(int shiftId, LocalDate date, String time, String description, Dentist dentistMap, Patient patientMap) {
         this.shiftId = shiftId;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.dentistMap = dentistMap;
+        this.patientMap = patientMap;
     }
 
     public int getShiftId() {
@@ -26,11 +43,11 @@ public class Shift {
         this.shiftId = shiftId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -1,16 +1,21 @@
 package org.dentalclinic.logic;
 
+import jakarta.persistence.Entity;
+import java.io.Serializable;
+
+import java.time.LocalDate;
 import java.util.Date;
 
-public class LegalGuardian extends Person {
+@Entity
+public class LegalGuardian extends Person implements Serializable {
 //    private int legalGuardianId;
     private String typeOfGuardian;
 
     public LegalGuardian() {
     }
 
-    public LegalGuardian(String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth, String typeOfGuardian) {
-        super(dni, firstName, lastName, phone, address, dateOfBirth);
+    public LegalGuardian(int id, String dni, String firstName, String lastName, String phone, String address, LocalDate dateOfBirth, String typeOfGuardian) {
+        super(id, dni, firstName, lastName, phone, address, dateOfBirth);
         this.typeOfGuardian = typeOfGuardian;
     }
 

@@ -1,37 +1,43 @@
 package org.dentalclinic.logic;
 
 import jakarta.persistence.*;
-import jdk.jfr.Timestamp;
+import java.io.Serializable;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
     private String dni;
     private String firstName;
     private String lastName;
     private String phone;
     private String address;
-
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public Person() {
     }
 
-    public Person(String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth) {
+    public Person(int id, String dni, String firstName, String lastName, String phone, String address, LocalDate dateOfBirth) {
+        this.id = id;
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDni() {
@@ -74,11 +80,11 @@ public class Person {
         this.address = address;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

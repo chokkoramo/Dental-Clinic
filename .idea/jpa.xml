@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="DentalClinic" name="dentalclinicPU" framework="JPA" ormUnit="DentalClinic:dentalclinicPU" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
+      <persistence-unit moduleName="DentalClinic" name="dentalClinicPU" framework="JPA" ormUnit="DentalClinic:default" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
+    </persistence-units>
+  </component>
+</project>

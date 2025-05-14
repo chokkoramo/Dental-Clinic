@@ -1,20 +1,29 @@
 package org.dentalclinic.logic;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import java.io.Serializable;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class Patient extends Person {
+@Entity
+public class Patient extends Person implements Serializable {
 //    private int patientId;
     private boolean medicalInsurance;
     private String bloodType;
+    @OneToOne
     private LegalGuardian legalGuardian;
+    @OneToMany(mappedBy = "patientMap")
     private List<Shift> shiftList;
 
     public Patient() {
     }
 
-    public Patient(String dni, String firstName, String lastName, String phone, String address, Date dateOfBirth, boolean medicalInsurance, String bloodType, LegalGuardian legalGuardian, List<Shift> shiftList) {
-        super(dni, firstName, lastName, phone, address, dateOfBirth);
+    public Patient(int id, String dni, String firstName, String lastName, String phone, String address, LocalDate dateOfBirth, boolean medicalInsurance, String bloodType, LegalGuardian legalGuardian, List<Shift> shiftList) {
+        super(id, dni, firstName, lastName, phone, address, dateOfBirth);
         this.medicalInsurance = medicalInsurance;
         this.bloodType = bloodType;
         this.legalGuardian = legalGuardian;
