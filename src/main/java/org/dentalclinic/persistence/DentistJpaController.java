@@ -4,11 +4,10 @@
  */
 package org.dentalclinic.persistence;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
-import jakarta.persistence.Query;
-import jakarta.persistence.EntityNotFoundException;
+
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.UserTransaction;
@@ -28,6 +27,10 @@ public class DentistJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public DentistJpaController() {
+        emf= Persistence.createEntityManagerFactory("DentalClinicPU");
     }
 
     public void create(Dentist dentist) throws RollbackFailureException, Exception {
