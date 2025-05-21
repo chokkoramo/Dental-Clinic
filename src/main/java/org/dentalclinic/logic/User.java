@@ -25,11 +25,11 @@ public class User implements Serializable {
         this.rol = rol;
     }
 
-    public int getuserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setuserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

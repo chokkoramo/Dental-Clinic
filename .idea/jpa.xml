@@ -4,6 +4,8 @@
     <persistence-units>
       <persistence-unit moduleName="DentalClinic" name="dentalclinicPU" framework="JPA" ormUnit="DentalClinic:dentalclinicPU" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
       <persistence-unit moduleName="DentalClinic" name="dentalClinicPU" framework="JPA" ormUnit="DentalClinic:default" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
+      <persistence-unit moduleName="DentalClinic" name="DentalClinicPU" framework="JPA" ormUnit="DentalClinic:dentalClinicPU" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
+      <persistence-unit moduleName="DentalClinic" name="DentalClinicPU" framework="JPA" ormUnit="DentalClinic:DentalClinicPU" defaultDataSourceId="81e3d91e-638c-4140-89ca-93ee54bf143c" />
     </persistence-units>
   </component>
 </project>

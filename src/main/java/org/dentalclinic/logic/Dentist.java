@@ -1,8 +1,6 @@
 package org.dentalclinic.logic;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 import java.time.LocalDate;

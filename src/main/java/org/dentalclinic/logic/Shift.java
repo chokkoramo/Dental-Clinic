@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Shift implements Serializable {
@@ -16,11 +15,11 @@ public class Shift implements Serializable {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "shiftId")
+    @JoinColumn(name = "dentistMapId")
     private Dentist dentistMap;
 
     @ManyToOne
-    @JoinColumn(name = "shiftId")
+    @JoinColumn(name = "patientMapId")
     private Patient patientMap;
 
     public Shift() {

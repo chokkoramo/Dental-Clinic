@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
+<html>
 <head>
 
   <meta charset="utf-8">
@@ -41,24 +42,37 @@
                   <h1 class="h4 text-gray-900 mb-4">Ingreso Clínica</h1>
                 </div>
                 <form class="user" action="SvLogin" method="POST">
-                  <div class="form-group">
-                    <input class="form-control form-control-user" id="username" name="username" placeholder="Usuario">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
-                  </div>
-                  <button class="btn btn-primary btn-user btn-block" type="submit">
-                    Ingresar
-                  </button>
+
+
+                  <p>Nombre de usuario o contraseña incorrecto</p>
+
+                  <br>
+                  <a href="login.jsp" class="btn btn-primary btn-user btn-block">
+                    Volver al Login
+                  </a>
+                  <br>
+                  <br>
+                  <br>
+
+
+
                 </form>
+
+
+
+
+
               </div>
             </div>
           </div>
         </div>
+
       </div>
+
     </div>
+
   </div>
-</div>
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -70,3 +84,4 @@
   <script src="js/sb-admin-2.min.js"></script>
 
 </body>
+</html>

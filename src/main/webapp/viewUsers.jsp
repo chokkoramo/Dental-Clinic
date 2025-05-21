@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="logic.User"%>
+<%@page import="org.dentalclinic.logic.User"%>
 <%@page import="java.util.List"%>
 <%@ include file="components/header.jsp"%>
 <%@ include file="components/firstBody.jsp"%>
@@ -19,7 +19,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="dataTable">
           <thead>
           <tr>
             <th>Id</th>
@@ -42,24 +42,24 @@
           %>
 
           <tbody>
-          <% for (User user : userList) {%>
+          <% for (User u : userList) {%>
           <tr>
-            <td id="id_usu<%=user.getUserId()%>"><%=user.getUserId() %>   </td>
-            <td><%=user.getUserName() %></td>
-            <td><%=user.getRol()%></td>
+            <td id="id_usu<%=u.getUserId()%>"><%=u.getUserId() %>   </td>
+            <td><%=u.getUserName() %></td>
+            <td><%=u.getRol()%></td>
 
             <td style="display: flex; width: 230px;">
-              <form name="delete" action="SvElimuserarios" method="POST"> <!-- esto es para mandar el codigo al servlet -->
+              <form name="delete" action="SvDeleteUsers" method="POST"> <!-- esto es para mandar el codigo al servlet -->
                 <button type="submit" class="btn btn-primary btn-user btn-block" style="background-color:red; margin-right: 5px; ">
                   <i class="fas fa-trash-alt"></i>  Eliminar
                 </button>
-                <input type="hidden" name="id" value="<%=user.getUserId()%>"> <!-- esto es para mandar el codigo al servlet -->
+                <input type="hidden" name="id" value="<%=u.getUserId()%>"> <!-- esto es para mandar el codigo al servlet -->
               </form>
-              <form name="modify" action="SvEdituserarios" method="GET"> <!-- esto es para mandar el codigo al servlet -->
-                <button type="submit" class="btn btn-primary btn-user btn-block"; style="margin-left: 5px;">
+              <form name="modify" action="SvModifyUsers" method="GET"> <!-- esto es para mandar el codigo al servlet -->
+                <button type="submit" class="btn btn-primary btn-user btn-block" style="margin-left: 5px;">
                   <i class="fas fa-pencil-alt"></i>  Editar
                 </button>
-                <input type="hidden" name="id" value="<%=user.getUserId()%>"> <!-- esto es para mandar el codigo al servlet -->
+                <input type="hidden" name="id" value="<%=u.getUserId()%>"> <!-- esto es para mandar el codigo al servlet -->
               </form>
             </td>
           </tr>

@@ -3,14 +3,15 @@
 <body id="page-top">
 
 <!-- Validación Sesión -->
-  <% HttpSession misession = request.getSession();
-            String user = (String) request.getSession().getAttribute("user");
+  <%
+    String user = (String) session.getAttribute("username");
 
-            if(user==null) {
-                response.sendRedirect("noLogin.jsp");
-            }
+    if (user == null) {
+        response.sendRedirect("noLogin.jsp");
+    }
+%>
 
-        %>
+
 
 
 <!-- Page Wrapper -->
@@ -20,7 +21,7 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.jsp">
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-regular fa-tooth"></i>
       </div>
@@ -56,7 +57,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Acciones:</h6>
           <a class="collapse-item" href="">Ver Odontólogos</a>
-          <a class="collapse-item" href="altaOdontologo.jsp"> Alta Odontólogos</a>
+          <a class="collapse-item" href="../registerDentist.jsp"> Alta Odontólogos</a>
         </div>
       </div>
     </li>
@@ -72,7 +73,7 @@
            data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Acciones:</h6>
-          <a class="collapse-item" href="">Ver Pacientes</a>
+          <a class="collapse-item" href="SvUsers">Ver Pacientes</a>
           <a class="collapse-item" href="">Alta Pacientes</a>
 
         </div>
@@ -90,8 +91,8 @@
            data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Acciones:</h6>
-          <a class="collapse-item" href="SvUsuarios">Ver Usuarios</a>
-          <a class="collapse-item" href="altaUsuarios.jsp">Alta Usuarios</a>
+          <a class="collapse-item" href="SvUsers">Ver Usuarios</a>
+          <a class="collapse-item" href="${pageContext.request.contextPath}/registerUser.jsp">Alta Usuarios</a>
 
         </div>
       </div>
@@ -132,7 +133,7 @@
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=request.getSession().getAttribute("usuario")%></span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=request.getSession().getAttribute("username")%></span>
               <img class="img-profile rounded-circle"
                    src="img/undraw_profile.svg">
             </a>
@@ -172,8 +173,3 @@
           <h1 class="h3 mb-0 text-gray-800">Clínica Odontológica</h1>
 
         </div>
-      </div>
-
-    </div>
-  </div>
-</div>

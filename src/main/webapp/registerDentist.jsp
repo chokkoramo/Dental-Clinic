@@ -3,38 +3,30 @@
 <%@ include file="components/firstBody.jsp"%>
 
 <h1>Alta Odontólogos</h1>
-<p>Esto es una prueba</p>
 
 <form class="user">
   <div class="form-group col">
     <div class="col-sm-6 mb-3">
       <label for="dni">DNI
-      </label><input type="text" class="form-control form-control-user" id="dni"
-                                      placeholder="DNI">
+      </label><input type="text" class="form-control form-control-user" id="dni" placeholder="DNI">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="firstName"
-             placeholder="Nombre">
+      <input type="text" class="form-control form-control-user" id="firstName" placeholder="Nombre">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="lastName"
-             placeholder="Apellido">
+      <input type="text" class="form-control form-control-user" id="lastName" placeholder="Apellido">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="phone"
-             placeholder="Teléfono">
+      <input type="text" class="form-control form-control-user" id="phone" placeholder="Teléfono">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="address"
-             placeholder="Dirección">
+      <input type="text" class="form-control form-control-user" id="address" placeholder="Dirección">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="dateOfBirth"
-             placeholder="Fecha Nac">
+      <input type="text" class="form-control form-control-user" id="dateOfBirth" placeholder="Fecha Nac">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user" id="specialty"
-             placeholder="Especialidad">
+      <input type="text" class="form-control form-control-user" id="specialty" placeholder="Especialidad">
     </div>
 
     <!-- Acá va a ir todo lo que respecta a horarios y usuarios -->
