@@ -1,6 +1,7 @@
 package org.dentalclinic.logic;
 
 import org.dentalclinic.persistence.PersistenceController;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,12 @@ public class Controller {
         return persisController.getUser();
     }
 
-    public void createUser(String userName, String password, String rol) {
-        User usu = new User();
-        usu.setUserName(userName);
-        usu.setPassword(password);
-        usu.setRol(rol);
-        persisController.createUser(usu);
+    public void createUser(String userName, String hashedPassword, String rol) {
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(hashedPassword);
+        user.setRol(rol);
+        persisController.createUser(user);
     }
 
     public boolean checkLogin(String username, String password) {
@@ -27,9 +28,9 @@ public class Controller {
         List<User> userList = new ArrayList<User>();
         userList = persisController.getUsers();
 
-        for (User usu : userList) {
-            if(usu.getUserName().equals(username)) {
-                if (usu.getPassword().equals(password)) {
+        for (User user : userList) {
+            if(user.getUserName().equals(username)) {
+                if (BCrypt.checkpw(password, user.getPassword())) {
                     login = true;
                 }
                 else {
@@ -50,5 +51,16 @@ public class Controller {
 
     public void modifyUsers(User u) {
         persisController.modifyUsers(u);
+    }
+
+    public List<Patient> getPatients() {
+        return persisController.getPatients();
+    }
+
+    public void createPatient(String patientName, String patientLastName, String patientPassword, Boolean medicalInsurance, String bloodType, String rol) {
+        Patient patient = new Patient();
+        patient.setFirstName(patientName);
+        patient.setLastName(patientLastName);
+
     }
 }

@@ -9,11 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.dentalclinic.logic.Controller;
-import org.dentalclinic.logic.User;
-import org.mindrot.jbcrypt.BCrypt;
+import org.dentalclinic.logic.Patient;
 
-@WebServlet(name = "SvUsers", urlPatterns = {"/SvUsers"})
-public class SvUsers extends HttpServlet {
+@WebServlet(name = "SvPatient", urlPatterns = {"/SvPatient"})
+public class SvPatient extends HttpServlet {
 
     Controller controller = new Controller ();
 
@@ -25,31 +24,30 @@ public class SvUsers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<User> userList;
+        List<Patient> patientList;
 
-        userList = controller.getUser();
+        patientList = controller.getPatients();
 
         HttpSession session = request.getSession();
-        session.setAttribute("userList", userList);
+        session.setAttribute("patientList", patientList);
 
-        System.out.println("Usuario: " + userList.get(0));
+        System.out.println("Paciente: " + patientList.get(0));
 
-        response.sendRedirect("viewUsers.jsp");
+        response.sendRedirect("viewPatients.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String patientName = request.getParameter("patientName");
+        String patientLastName = request.getParameter("patientLastName");
+        String patientPassword = request.getParameter("patientPassword");
+        Boolean medicalInsurance = request.getParameter("medicalInsurance") != null;
+        String bloodType = request.getParameter("bloodType");
+        String rol = "Patient";
 
-        String userName = request.getParameter("username");
-        String plainPassword = request.getParameter("password");
-        String rol = request.getParameter("rol");
-
-        String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
-
-        controller.createUser(userName, hashedPassword, rol);
-
-        response.sendRedirect("index.jsp");
+        controller.createPatient(patientName, patientLastName, patientPassword, medicalInsurance, bloodType, rol);
+        response.sendRedirect("viewPatients.jsp");
     }
 
     @Override

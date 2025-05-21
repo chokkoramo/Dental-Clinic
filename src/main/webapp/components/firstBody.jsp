@@ -74,7 +74,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Acciones:</h6>
           <a class="collapse-item" href="SvUsers">Ver Pacientes</a>
-          <a class="collapse-item" href="">Alta Pacientes</a>
+          <a class="collapse-item" href="${pageContext.request.contextPath}/registerPatient.jsp">Alta Pacientes</a>
 
         </div>
       </div>
@@ -100,11 +100,6 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-
-
-
-
-
   </ul>
   <!-- End of Sidebar -->
 
@@ -122,12 +117,8 @@
           <i class="fa fa-bars"></i>
         </button>
 
-
-
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
-
-
 
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
@@ -159,9 +150,7 @@
               </a>
             </div>
           </li>
-
         </ul>
-
       </nav>
       <!-- End of Topbar -->
 
@@ -171,5 +160,4 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Clínica Odontológica</h1>
-
         </div>

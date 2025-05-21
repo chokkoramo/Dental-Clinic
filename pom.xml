@@ -80,6 +80,14 @@
             <artifactId>openjpa</artifactId>
             <version>4.0.1</version>
         </dependency>
+
+        <!-- Hacer hasheo de contraseñas -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

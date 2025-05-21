@@ -1,5 +1,6 @@
 package org.dentalclinic.persistence;
 
+import org.dentalclinic.logic.Patient;
 import org.dentalclinic.logic.User;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class PersistenceController {
         shiftJpa = new ShiftJpaController();
     }
 
-    public void createUser(User usu){
+    public void createUser(User user){
         try {
-            userJpa.create(usu);
+            userJpa.create(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -59,5 +60,9 @@ public class PersistenceController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Patient> getPatients() {
+        return patientJpa.findPatientEntities();
     }
 }
