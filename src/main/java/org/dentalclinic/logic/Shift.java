@@ -10,6 +10,7 @@ public class Shift implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shiftId;
+    private String affection;
     private LocalDate date;
     private String time;
     private String description;
@@ -22,16 +23,17 @@ public class Shift implements Serializable {
     @JoinColumn(name = "patientMapId")
     private Patient patientMap;
 
-    public Shift() {
-    }
-
-    public Shift(int shiftId, LocalDate date, String time, String description, Dentist dentistMap, Patient patientMap) {
+    public Shift(int shiftId, String affection, LocalDate date, String time, String description, Dentist dentistMap, Patient patientMap) {
         this.shiftId = shiftId;
+        this.affection = affection;
         this.date = date;
         this.time = time;
         this.description = description;
         this.dentistMap = dentistMap;
         this.patientMap = patientMap;
+    }
+
+    public Shift() {
     }
 
     public int getShiftId() {
@@ -64,5 +66,29 @@ public class Shift implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAffection() {
+        return affection;
+    }
+
+    public void setAffection(String affection) {
+        this.affection = affection;
+    }
+
+    public Dentist getDentistMap() {
+        return dentistMap;
+    }
+
+    public void setDentistMap(Dentist dentistMap) {
+        this.dentistMap = dentistMap;
+    }
+
+    public Patient getPatientMap() {
+        return patientMap;
+    }
+
+    public void setPatientMap(Patient patientMap) {
+        this.patientMap = patientMap;
     }
 }

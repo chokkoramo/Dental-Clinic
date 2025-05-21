@@ -1,7 +1,6 @@
 package org.dentalclinic.persistence;
 
-import org.dentalclinic.logic.Patient;
-import org.dentalclinic.logic.User;
+import org.dentalclinic.logic.*;
 
 import java.util.List;
 
@@ -61,8 +60,120 @@ public class PersistenceController {
             throw new RuntimeException(e);
         }
     }
+    public void createSchedule(Schedule schedule) {
+        try {
+            scheduleJpa.create(schedule);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    public List<Patient> getPatients() {
+    public void createDentist(Dentist dentist) {
+        try {
+            dentistJpa.create(dentist);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Dentist> getAllDentists() {
+        return dentistJpa.findDentistEntities();
+    }
+
+    public Dentist getDentistById(int id) {
+        return dentistJpa.findDentist(id);
+    }
+
+    public void modifyDentist(Dentist dentist){
+        try {
+            dentistJpa.edit(dentist);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modifySchedule(Schedule schedule) {
+        try {
+            scheduleJpa.edit(schedule);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteDentist(int id) {
+        try {
+            dentistJpa.destroy(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createLegalGuardian(LegalGuardian legalGuardian) {
+        try {
+            legalGuardianJpa.create(legalGuardian);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createPatient(Patient patient) {
+        try {
+            patientJpa.create(patient);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Patient> getAllPatients() {
         return patientJpa.findPatientEntities();
     }
+
+    public void deletePatient(int id) {
+        try {
+            patientJpa.destroy(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Patient getPatientById(int id) {
+        return patientJpa.findPatient(id);
+    }
+
+    public void modifyPatient(Patient patient) {
+        try {
+            patientJpa.edit(patient);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modifyLegalGuardian(LegalGuardian legalGuardian) {
+        try {
+            legalGuardianJpa.edit(legalGuardian);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createShift(Shift shift) {
+        try {
+            shiftJpa.create(shift);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Shift> getAllShifts() {
+        return shiftJpa.findShiftEntities();
+    }
+
+    public void deleteShift(int shiftId) {
+        try {
+            shiftJpa.destroy(shiftId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

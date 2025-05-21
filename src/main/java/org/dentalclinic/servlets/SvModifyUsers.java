@@ -24,7 +24,7 @@ public class SvModifyUsers extends HttpServlet {
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter ("id"));
-        User usu = controller.getUserPerId(id);
+        User usu = controller.getUserById(id);
 
         HttpSession session = request.getSession();
         session.setAttribute("modifyUser", usu);
