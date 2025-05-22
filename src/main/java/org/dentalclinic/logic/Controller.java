@@ -53,7 +53,7 @@ public class Controller {
         persisController.modifyUsers(u);
     }
 
-    public List<Patient> getPatients() {
+    public List<Patient> getAllPatients() {
         return persisController.getAllPatients();
     }
 
@@ -142,10 +142,6 @@ public class Controller {
         patient.setaLegalGuardian(legalGuardian);
 
         persisController.createPatient(patient);
-    }
-
-    public List<Patient> getAllPatients() {
-        return persisController.getAllPatients();
     }
 
     public void deletePatient(int id) {

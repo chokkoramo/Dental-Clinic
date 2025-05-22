@@ -28,15 +28,6 @@
             <th style="width: 210px">Acción</th>
           </tr>
           </thead>
-          <tfoot>
-          <tr>
-            <th>Id</th>
-            <th>Nombre de Usuario</th>
-            <th>Rol</th>
-            <th style=" width: 210px">Acción</th>
-          </tr>
-          </tfoot>
-
           <%
             List<User> userList = (List) request.getSession().getAttribute("userList");
           %>
@@ -44,7 +35,7 @@
           <tbody>
           <% for (User u : userList) {%>
           <tr>
-            <td id="id_usu<%=u.getUserId()%>"><%=u.getUserId() %>   </td>
+            <td id="userId<%=u.getUserId()%>"><%=u.getUserId() %>   </td>
             <td><%=u.getUserName() %></td>
             <td><%=u.getRol()%></td>
 

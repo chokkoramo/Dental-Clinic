@@ -26,15 +26,11 @@ public class SvPatient extends HttpServlet {
             throws ServletException, IOException {
 
         List<Patient> patientList;
-
-        patientList = controller.getPatients();
-
+        patientList = controller.getAllPatients();
         HttpSession session = request.getSession();
         session.setAttribute("patientList", patientList);
-
         System.out.println("Paciente: " + patientList.get(0));
-
-        response.sendRedirect("viewPatients.jsp");
+        response.sendRedirect("viewPatient.jsp");
     }
 
     @Override

@@ -26,14 +26,10 @@ public class SvUsers extends HttpServlet {
             throws ServletException, IOException {
 
         List<User> userList;
-
         userList = controller.getUser();
-
         HttpSession session = request.getSession();
         session.setAttribute("userList", userList);
-
         System.out.println("Usuario: " + userList.get(0));
-
         response.sendRedirect("viewUsers.jsp");
     }
 
