@@ -66,5 +66,5 @@ Despues de realizar este ejercicio he podido aprender y terminar de comprender t
 - [ ] Utilizar frameworks modernos
 ---
 
-##🔑 Derechos reservados a TodoCode
+## 🔑 Derechos reservados a TodoCode
 El ejercicio aquí presente y la resolución del mismo es propiedad intelectual de TodoCode https://www.todocodeacademy.com
