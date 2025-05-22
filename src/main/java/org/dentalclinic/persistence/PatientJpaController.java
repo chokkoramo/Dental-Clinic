@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.Root;
 import jakarta.transaction.UserTransaction;
 import java.util.List;
 import org.dentalclinic.logic.Patient;
+import org.dentalclinic.logic.User;
 import org.dentalclinic.persistence.exceptions.NonexistentEntityException;
 import org.dentalclinic.persistence.exceptions.RollbackFailureException;
 
@@ -20,10 +21,8 @@ import org.dentalclinic.persistence.exceptions.RollbackFailureException;
 public class PatientJpaController implements Serializable {
 
     public PatientJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public PatientJpaController() {
@@ -34,18 +33,16 @@ public class PatientJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Patient patient) throws RollbackFailureException, Exception {
+    public void create(Patient patient) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(patient);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -58,13 +55,13 @@ public class PatientJpaController implements Serializable {
     public void edit(Patient patient) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
+            em.getTransaction().begin();
             em = getEntityManager();
             patient = em.merge(patient);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
             try {
-                utx.rollback();
+                em.getTransaction().rollback();
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
@@ -86,7 +83,7 @@ public class PatientJpaController implements Serializable {
     public void destroy(int id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
+            em.getTransaction().begin();
             em = getEntityManager();
             Patient patient;
             try {
@@ -96,10 +93,10 @@ public class PatientJpaController implements Serializable {
                 throw new NonexistentEntityException("The patient with id " + id + " no longer exists.", enfe);
             }
             em.remove(patient);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
             try {
-                utx.rollback();
+                em.getTransaction().rollback();
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
