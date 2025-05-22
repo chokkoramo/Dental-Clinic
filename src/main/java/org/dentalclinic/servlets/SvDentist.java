@@ -35,7 +35,7 @@ public class SvDentist extends HttpServlet {
         List<Dentist> dentists = controller.getAllDentists();
         HttpSession session = request.getSession();
         session.setAttribute("dentists", dentists);
-        response.sendRedirect("viewDentists.jsp");
+        response.sendRedirect("viewDentist.jsp");
     }
 
     @Override

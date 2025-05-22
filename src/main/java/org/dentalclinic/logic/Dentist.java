@@ -15,7 +15,8 @@ public class Dentist extends Person implements Serializable {
     private List<Shift> shiftList;
     @OneToOne
     private User user;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "scheduleId")
     private Schedule schedule;
 
     public Dentist() {

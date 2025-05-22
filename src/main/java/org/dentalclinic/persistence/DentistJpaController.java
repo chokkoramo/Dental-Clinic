@@ -1,46 +1,36 @@
 package org.dentalclinic.persistence;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.transaction.UserTransaction;
 import java.util.List;
 import org.dentalclinic.logic.Dentist;
+import org.dentalclinic.logic.User;
 import org.dentalclinic.persistence.exceptions.NonexistentEntityException;
-import org.dentalclinic.persistence.exceptions.RollbackFailureException;
 
 public class DentistJpaController implements Serializable {
 
-    public DentistJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
+
+    public DentistJpaController() {
+        emf = Persistence.createEntityManagerFactory("DentalClinicPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public DentistJpaController() {
-        emf= Persistence.createEntityManagerFactory("DentalClinicPU");
-    }
-
-    public void create(Dentist dentist) throws RollbackFailureException, Exception {
+    public void create(Dentist dentist) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(dentist);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -50,25 +40,19 @@ public class DentistJpaController implements Serializable {
         }
     }
 
-    public void edit(Dentist dentist) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Dentist dentist) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             dentist = em.merge(dentist);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                int id = dentist.getId();
-                if (findDentist(id) == null) {
-                    throw new NonexistentEntityException("The dentist with id " + id + " no longer exists.");
-                }
+            if (findDentist(dentist.getId()) == null) {
+                throw new NonexistentEntityException("The dentist with id " + dentist.getId() + " no longer exists.");
             }
             throw ex;
         } finally {
@@ -78,25 +62,19 @@ public class DentistJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(int id) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
-            Dentist dentist;
-            try {
-                dentist = em.getReference(Dentist.class, id);
-                dentist.getId();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The dentist with id " + id + " no longer exists.", enfe);
-            }
+            em.getTransaction().begin();
+            Dentist dentist = em.getReference(Dentist.class, id);
             em.remove(dentist);
-            utx.commit();
+            em.getTransaction().commit();
+        } catch (EntityNotFoundException enfe) {
+            throw new NonexistentEntityException("The dentist with id " + id + " no longer exists.", enfe);
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -117,7 +95,7 @@ public class DentistJpaController implements Serializable {
     private List<Dentist> findDentistEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Dentist> cq = em.getCriteriaBuilder().createQuery(Dentist.class);
             cq.select(cq.from(Dentist.class));
             Query q = em.createQuery(cq);
             if (!all) {
@@ -142,7 +120,7 @@ public class DentistJpaController implements Serializable {
     public int getDentistCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Long> cq = em.getCriteriaBuilder().createQuery(Long.class);
             Root<Dentist> rt = cq.from(Dentist.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
@@ -151,5 +129,4 @@ public class DentistJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

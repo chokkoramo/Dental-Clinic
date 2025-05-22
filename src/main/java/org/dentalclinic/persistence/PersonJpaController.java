@@ -1,51 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.dentalclinic.persistence;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.transaction.UserTransaction;
 import java.util.List;
 import org.dentalclinic.logic.Person;
 import org.dentalclinic.persistence.exceptions.NonexistentEntityException;
-import org.dentalclinic.persistence.exceptions.RollbackFailureException;
-
 
 public class PersonJpaController implements Serializable {
 
-    public PersonJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
+    public PersonJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
     public PersonJpaController() {
-        emf= Persistence.createEntityManagerFactory("DentalClinicPU");
+        emf = Persistence.createEntityManagerFactory("DentalClinicPU");
     }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Person person) throws RollbackFailureException, Exception {
+    public void create(Person person) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(person);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -55,18 +43,16 @@ public class PersonJpaController implements Serializable {
         }
     }
 
-    public void edit(Person person) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Person person) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             person = em.merge(person);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -83,11 +69,11 @@ public class PersonJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(int id) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Person person;
             try {
                 person = em.getReference(Person.class, id);
@@ -96,12 +82,10 @@ public class PersonJpaController implements Serializable {
                 throw new NonexistentEntityException("The person with id " + id + " no longer exists.", enfe);
             }
             em.remove(person);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -122,9 +106,10 @@ public class PersonJpaController implements Serializable {
     private List<Person> findPersonEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Person.class));
-            Query q = em.createQuery(cq);
+            CriteriaQuery<Person> cq = em.getCriteriaBuilder().createQuery(Person.class);
+            Root<Person> rt = cq.from(Person.class);
+            cq.select(rt);
+            TypedQuery<Person> q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -147,14 +132,13 @@ public class PersonJpaController implements Serializable {
     public int getPersonCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Long> cq = em.getCriteriaBuilder().createQuery(Long.class);
             Root<Person> rt = cq.from(Person.class);
             cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
+            TypedQuery<Long> q = em.createQuery(cq);
+            return q.getSingleResult().intValue();
         } finally {
             em.close();
         }
     }
-    
 }

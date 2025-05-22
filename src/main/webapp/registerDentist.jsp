@@ -35,12 +35,12 @@
              name="dateOfBirth" id="dateOfBirth" placeholder="Fecha nacimiento">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user"
-             id="exampleRepeatPassword" name="startingTime"placeholder="horario inicio">
+      <input type="time" class="form-control form-control-user"
+             id="startingTime" name="startingTime" placeholder="Horario inicio">
     </div>
     <div class="col-sm-6 mb-3">
-      <input type="text" class="form-control form-control-user"
-             id="exampleRepeatPassword" name="endingTime" placeholder="horario fin">
+      <input type="time" class="form-control form-control-user"
+             id="endingTime" name="endingTime" placeholder="Horario fin">
     </div>
   </div>
   <button  class="btn btn-primary btn-user btn-block" type = "submit" >

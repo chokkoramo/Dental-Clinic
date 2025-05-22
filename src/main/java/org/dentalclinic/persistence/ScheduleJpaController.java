@@ -1,51 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.dentalclinic.persistence;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
-
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.transaction.UserTransaction;
 import java.util.List;
 import org.dentalclinic.logic.Schedule;
 import org.dentalclinic.persistence.exceptions.NonexistentEntityException;
-import org.dentalclinic.persistence.exceptions.RollbackFailureException;
-
 
 public class ScheduleJpaController implements Serializable {
 
-    public ScheduleJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public ScheduleJpaController() {
-        emf= Persistence.createEntityManagerFactory("DentalClinicPU");
+        emf = Persistence.createEntityManagerFactory("DentalClinicPU");
     }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Schedule schedule) throws RollbackFailureException, Exception {
+    public void create(Schedule schedule) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(schedule);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -55,18 +39,16 @@ public class ScheduleJpaController implements Serializable {
         }
     }
 
-    public void edit(Schedule schedule) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Schedule schedule) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             schedule = em.merge(schedule);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -83,11 +65,11 @@ public class ScheduleJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(int id) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Schedule schedule;
             try {
                 schedule = em.getReference(Schedule.class, id);
@@ -96,12 +78,10 @@ public class ScheduleJpaController implements Serializable {
                 throw new NonexistentEntityException("The schedule with id " + id + " no longer exists.", enfe);
             }
             em.remove(schedule);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             throw ex;
         } finally {
@@ -122,9 +102,9 @@ public class ScheduleJpaController implements Serializable {
     private List<Schedule> findScheduleEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Schedule> cq = em.getCriteriaBuilder().createQuery(Schedule.class);
             cq.select(cq.from(Schedule.class));
-            Query q = em.createQuery(cq);
+            TypedQuery<Schedule> q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -147,14 +127,13 @@ public class ScheduleJpaController implements Serializable {
     public int getScheduleCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Long> cq = em.getCriteriaBuilder().createQuery(Long.class);
             Root<Schedule> rt = cq.from(Schedule.class);
             cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
+            TypedQuery<Long> q = em.createQuery(cq);
+            return q.getSingleResult().intValue();
         } finally {
             em.close();
         }
     }
-    
 }
