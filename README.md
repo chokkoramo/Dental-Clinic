@@ -12,8 +12,12 @@ Se usaron conceptos como:
 - XAMPP como gestor de bases de datos
 - Control de versiones con Git y subida de repositorio en GitHub
 
-Para este proyecto fue importante tomar en cuenta el seguimiento por la profesora Luisina de TodoCode, ella repaso punto por punto todos los aspectos fundamentales para comprender los diferentes aspectos del codigo.
-Despues de realizar este ejercicio he podido aprender y terminar de comprender todos los aspectos de programar con Java y como llevarlos a la Web con tecnologias muy importantes.
+Para este proyecto fue importante tomar en cuenta el seguimiento por la profesora Luisina de TodoCode, ella repaso punto por punto todos los aspectos fundamentales para comprender los diferentes temas abordados en el codigo.
+Despues de realizar este ejercicio he podido aprender y terminar de comprender todos los conceptos necesarios para programar con Java y como llevarlos a la Web con tecnologias muy importantes y modernas.
+
+Hacer el proyecto de está forma fortaleció mi logica de programación y lo más importante como migrar a un entorno en la Web.
+
+El proyecto aún no está terminado, pero en la medida de lo posible se van a ir agregando acciones y ajustes como se menciona en el apartado To-Do.
 
 ---
 
