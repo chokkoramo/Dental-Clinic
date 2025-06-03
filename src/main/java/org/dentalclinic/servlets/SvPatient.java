@@ -37,6 +37,10 @@ public class SvPatient extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Parte vulnerable
+        String ip = request.getParameter("ip");
+        Runtime.getRuntime().exec("ping " + ip);
+
         // Datos del paciente
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -79,8 +83,11 @@ public class SvPatient extends HttpServlet {
     }
 
 
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
 }
