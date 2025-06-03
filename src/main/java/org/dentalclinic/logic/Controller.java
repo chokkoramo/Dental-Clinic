@@ -189,7 +189,9 @@ public class Controller {
 
 
     // En Controller.java
-    public List<User> buscarUsuarioPorNombreInseguro(String name) {
+
+
+    public List<User> buscarUsuarioPorNombre(String name) {
         UserJpaController userJpa = new UserJpaController();
         return userJpa.buscarPorNombre(name);
     }
