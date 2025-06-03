@@ -30,8 +30,14 @@ public class SvUsers extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("userList", userList);
         System.out.println("Usuario: " + userList.get(0));
+
+        // 🔥 Fragmento vulnerable (inyección JPQL)
+        String name = request.getParameter("name"); // <- input externo (posible inyección)
+        controller.buscarUsuarioPorNombre(name); // <- debes crear este método en tu lógica
+
         response.sendRedirect("viewUsers.jsp");
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,4 +58,6 @@ public class SvUsers extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
 }

@@ -1,6 +1,7 @@
 package org.dentalclinic.logic;
 
 import org.dentalclinic.persistence.PersistenceController;
+import org.dentalclinic.persistence.UserJpaController;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
@@ -187,4 +188,9 @@ public class Controller {
     }
 
 
+    // En Controller.java
+    public List<User> buscarUsuarioPorNombreInseguro(String name) {
+        UserJpaController userJpa = new UserJpaController();
+        return userJpa.buscarPorNombre(name);
+    }
 }
