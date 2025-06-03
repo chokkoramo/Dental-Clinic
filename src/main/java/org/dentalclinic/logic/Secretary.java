@@ -4,11 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Secretary extends Person {
-//    private int secretaryId;
+
     private String sector;
 
     @OneToOne
@@ -23,13 +22,6 @@ public class Secretary extends Person {
         this.user = user;
     }
 
-//    public int getsecretaryId() {
-//        return secretaryId;
-//    }
-//
-//    public void setsecretaryId(int secretaryId) {
-//        this.secretaryId = secretaryId;
-//    }
 
     public String getSector() {
         return sector;
