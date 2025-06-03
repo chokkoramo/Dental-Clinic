@@ -2,14 +2,20 @@
 
 <body id="page-top">
 
-<!-- Validación Sesión -->
-  <%
-    String user = (String) session.getAttribute("username");
+<%--<!-- Validación Sesión -->--%>
+<%--  <%--%>
+<%--    String user = (String) session.getAttribute("username");--%>
 
-    if (user == null) {
-        response.sendRedirect("noLogin.jsp");
-    }
+<%--    if (user == null) {--%>
+<%--        response.sendRedirect("noLogin.jsp");--%>
+<%--    }--%>
+<%--%>--%>
+
+  <%
+    String userInput = request.getParameter("username");
 %>
+<p>Bienvenido, <%= userInput %></p>
+
 
 <!-- Page Wrapper -->
 <div id="wrapper">

@@ -1,6 +1,7 @@
 package org.dentalclinic.logic;
 
 import org.dentalclinic.persistence.PersistenceController;
+import org.dentalclinic.persistence.UserJpaController;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
@@ -184,5 +185,14 @@ public class Controller {
 
     public void deleteShift(int shiftId) {
         persisController.deleteShift(shiftId);
+    }
+
+
+    // En Controller.java
+
+
+    public List<User> buscarUsuarioPorNombre(String name) {
+        UserJpaController userJpa = new UserJpaController();
+        return userJpa.buscarPorNombre(name);
     }
 }

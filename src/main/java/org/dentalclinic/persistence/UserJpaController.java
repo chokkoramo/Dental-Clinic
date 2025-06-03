@@ -128,4 +128,14 @@ public class UserJpaController implements Serializable {
             em.close();
         }
     }
+
+    public List<User> buscarPorNombre(String name) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT u FROM User u WHERE u.userName = '" + name + "'";
+            return em.createQuery(jpql, User.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
